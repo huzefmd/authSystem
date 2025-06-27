@@ -1,80 +1,28 @@
 import React, { useContext } from 'react'
 import { AuthContext } from './AuthSystem'
 
-function AppBar({ username: propUsername, isLoggedIn: propisLoggedIn, logout: propLogout }) {
-    const contextValue = useContext(AuthContext);
+function AppBar({ username: propUsername, isLoggedin: proisLoggedin, logout: propLogout }) {
+  const contextValue = useContext(AuthContext);
+  const displayUserName = contextValue.username;
+  const displayLogggedin = contextValue.isLoggedin;
+  const { Logout } = useContext(AuthContext);
+  
 
-    const displayUsername = contextValue?.username ?? propUsername;
-    const displayIsLoggedIn = contextValue ?. isLoggedIn ?? propisLoggedIn;
-    const handleLogut = contextValue?.logout ?? propLogout;
-  return (
-      <div>
-          <h1>Auth System Demoo</h1>
-          {displayIsLoggedIn ? (
-              <div>
-                  <span>Welcome {displayUsername}!</span>
-                    <button onClick={handleLogut}>Logout</button>
-              </div>
-          ) : (
-                  <span>Not Logged In</span>
-          )}
-    </div>
-  )
+    return (
+      <div className=" flex justify-between p-6 bg-[#090040] text-white text-2xl font-semibold">
+        <h1>UseState Management</h1>
+        {displayLogggedin ? (
+          <div className='flex gap-10'>
+            <span>Welcome {displayUserName} </span>
+            <button className="p-2 rounded bg-[#578FCA] text-sm font-light" onClick={Logout}>
+              Logout
+            </button>
+          </div>
+        ) : (
+          <span>Please Login!!</span>
+        )}
+      </div>
+    );
 }
 
 export default AppBar
-
-
-// import { AuthContext } from "./AuthSystem";
-// import { useContext } from "react";
-
-// const AppBar = ({
-//   username: propUsername,
-//   isLoggedIn: propIsLoggedIn,
-//   logout: propLogout,
-// }) => {
-//   const contextValue = useContext(AuthContext);
-
-//   const displayUsername = contextValue?.username ?? propUsername;
-//   const displayIsLoggedIn = contextValue?.isLoggedIn ?? propIsLoggedIn;
-//   const handleLogout = contextValue?.logout ?? propLogout;
-
-//   return (
-//     <div
-//       style={{
-//         backgroundColor: "#3f98b5",
-//         color: "white",
-//         padding: "1rem",
-//         display: "flex",
-//         justifyContent: "space-between",
-//         alignItems: "center",
-//       }}
-//     >
-//       <h1 style={{ fontSize: "1.25rem", fontWeight: "bold" }}>
-//         Auth System Demo
-//       </h1>
-//       {displayIsLoggedIn ? (
-//         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-//           <span>Welcome, {displayUsername}!</span>
-//           <button
-//             onClick={handleLogout}
-//             style={{
-//               backgroundColor: "white",
-//               color: "#3f51b5",
-//               border: "none",
-//               padding: "0.5rem 1rem",
-//               borderRadius: "4px",
-//               cursor: "pointer",
-//             }}
-//           >
-//             Logout
-//           </button>
-//         </div>
-//       ) : (
-//         <span>Not logged in</span>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default AppBar;

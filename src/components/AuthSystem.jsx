@@ -1,55 +1,45 @@
-import React, { createContext, useState } from 'react'
-import AppBar from './AppBar';
-import Home from './Home';
-import Login from './Login';
+import React, { createContext, useState } from "react";
+import AppBar from "./AppBar";
+import Login from "./Login";
+import Home from "./Home";
+
 export const AuthContext = createContext(undefined);
-
-
 function AuthSystem() {
-    const [useContextApi, setUseContextApi] = useState(false);
-    const [username, setUsername] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const [isLoggedin, setisLoggedin] = useState(false);
+  const [useContextApi, setUseContextApi] = useState(true);
 
-    const login = (newUserName) => {
-        setUsername(newUserName);
-        setIsLoggedIn(true);
+  const LoginNew = (newUserName) => {
+    setUsername(newUserName);
+    setisLoggedin(true);
     };
+    
+  const Logout = () => {
+    setUsername("");
+    setisLoggedin(false);
+  };
 
-    const logout = () => {
-        setUsername('');
-        setIsLoggedIn(false);
-    };
-
-    const contextValue = useContextApi ? { username, isLoggedIn, login, logout } : undefined;
-
+    
+  const contextValue = useContextApi
+    ? { username, isLoggedin,setisLoggedin ,LoginNew, Logout }
+    : undefined;
     return (
-        <AuthContext.Provider value={contextValue}>
-            <AppBar
-                username={username}
-                isLoggedIn={isLoggedIn}
-                logout={logout}
-            />
-            <div>
-                <div>
-                    <input type="checkbox" id='use-context-api' checked={useContextApi} onChange={(e) => setUseContextApi(e.target.checked)} />
-                    <label htmlFor="use-context-api">
-                        Use Context Api : {useContextApi? "ON": "OFF"}
-                    </label>
-                </div>
-            </div>
-            <main>
-                {isLoggedIn ?
-                    (<Home />) : (
-                        <Login onLogin={ login} />
-                )}
-            </main>
-        </AuthContext.Provider>
-
-  )
+      <AuthContext.Provider value={contextValue}>
+        <AppBar
+          username={username}
+          setUsername={setUsername}
+          isLoggedin={isLoggedin}
+          logout={Logout}
+        />
+        <main>
+          {isLoggedin ? (
+            <Home />
+          ) : (
+            <Login username={username} setUsername={setUsername} />
+          )}
+        </main>
+      </AuthContext.Provider>
+    );
 }
 
-export default AuthSystem
-
-
-
-
+export default AuthSystem;

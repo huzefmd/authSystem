@@ -4,7 +4,7 @@ import AuthSystem from './components/AuthSystem'
 function App() {
   return (
     <div>
-      <AuthSystem/>
+      <AuthSystem />
     </div>
   )
 }
